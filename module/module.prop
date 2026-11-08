@@ -1,0 +1,6 @@
+id=rounded_screen_corners_20dp
+name=Rounded Screen Corners 20dp
+version=0.1.0-test
+versionCode=100
+author=amrbendari
+description=Experimental 20dp framework rounded-corner RRO mounted by Magisk. Test build only.
