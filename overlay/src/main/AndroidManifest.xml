@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <application android:hasCode="false" android:label="Rounded Screen Corners 20dp">
-        <overlay
-            android:targetPackage="android"
-            android:isStatic="true"
-            android:priority="999" />
-    </application>
+    <overlay
+        android:targetPackage="android"
+        android:isStatic="true"
+        android:priority="999" />
+    <application
+        android:hasCode="false"
+        android:label="Rounded Screen Corners 20dp" />
 </manifest>
