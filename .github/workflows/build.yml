@@ -1,0 +1,63 @@
+name: Build Magisk Module
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK platform
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Build overlay APK
+        run: gradle --no-daemon :overlay:assembleRelease
+
+      - name: Assemble Magisk ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out/rounded_screen_corners_20dp/system/product/overlay
+          cp module/module.prop out/rounded_screen_corners_20dp/module.prop
+          cp module/service.sh out/rounded_screen_corners_20dp/service.sh
+          cp module/uninstall.sh out/rounded_screen_corners_20dp/uninstall.sh
+          cp overlay/build/outputs/apk/release/overlay-release-unsigned.apk out/rounded_screen_corners_20dp/system/product/overlay/RoundedScreenCorners20dp.apk
+          chmod 0755 out/rounded_screen_corners_20dp/service.sh out/rounded_screen_corners_20dp/uninstall.sh
+          (cd out/rounded_screen_corners_20dp && zip -qr ../Rounded-Screen-Corners-20dp-Magisk.zip .)
+
+      - name: Validate artifacts
+        run: |
+          test -s overlay/build/outputs/apk/release/overlay-release-unsigned.apk
+          test -s out/Rounded-Screen-Corners-20dp-Magisk.zip
+          unzip -l out/Rounded-Screen-Corners-20dp-Magisk.zip
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump resources overlay/build/outputs/apk/release/overlay-release-unsigned.apk | grep -E 'rounded_corner_radius(_top|_bottom)?'
+
+      - name: Upload Magisk ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rounded-Screen-Corners-20dp-Magisk
+          path: out/Rounded-Screen-Corners-20dp-Magisk.zip
+          if-no-files-found: error
+          retention-days: 30
