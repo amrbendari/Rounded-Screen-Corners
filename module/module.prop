@@ -1,6 +1,6 @@
 id=rounded_screen_corners_20dp
 name=Rounded Screen Corners 20dp
-version=0.1.0-test
-versionCode=100
+version=0.2.0-preflight
+versionCode=200
 author=amrbendari
-description=Experimental 20dp framework rounded-corner RRO mounted by Magisk. Test build only.
+description=Experimental Magisk RRO module with post-boot overlay and effective-resource diagnostics. Not yet approved for installation.
