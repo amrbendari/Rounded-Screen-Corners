@@ -57,9 +57,10 @@ jobs:
           mkdir -p out/rounded_screen_corners_20dp/system/product/overlay
           cp module/module.prop out/rounded_screen_corners_20dp/module.prop
           cp module/service.sh out/rounded_screen_corners_20dp/service.sh
+          cp module/post-fs-data.sh out/rounded_screen_corners_20dp/post-fs-data.sh
           cp module/uninstall.sh out/rounded_screen_corners_20dp/uninstall.sh
           cp overlay/build/outputs/apk/release/overlay-release.apk out/rounded_screen_corners_20dp/system/product/overlay/RoundedScreenCorners20dp.apk
-          chmod 0755 out/rounded_screen_corners_20dp/service.sh out/rounded_screen_corners_20dp/uninstall.sh
+          chmod 0755 out/rounded_screen_corners_20dp/service.sh out/rounded_screen_corners_20dp/post-fs-data.sh out/rounded_screen_corners_20dp/uninstall.sh
           (cd out/rounded_screen_corners_20dp && zip -qr ../Rounded-Screen-Corners-20dp-Magisk.zip .)
 
       - name: Validate artifacts
