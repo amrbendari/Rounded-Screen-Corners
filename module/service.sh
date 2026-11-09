@@ -31,11 +31,11 @@ done
   echo "===== ANDROID OVERLAY REGISTRATION ====="
   cmd overlay list android 2>&1
 
-  echo "===== EFFECTIVE RESOURCE VALUES (OVERLAY REMAINS DISABLED) ====="
+  echo "===== EFFECTIVE RESOURCE VALUES (STATIC OVERLAY MAY BE AUTO-ENABLED) ====="
   for r in rounded_corner_radius rounded_corner_radius_top rounded_corner_radius_bottom; do
     printf '%s=' "$r"
     cmd overlay lookup android "android:dimen/$r" 2>&1
   done
 
-  echo "===== SAFE DISCOVERY COMPLETE: NO ENABLE COMMAND WAS RUN ====="
+  echo "===== SAFE DISCOVERY COMPLETE: NO MANUAL ENABLE COMMAND WAS RUN ====="
 } >> "$LOG" 2>&1
