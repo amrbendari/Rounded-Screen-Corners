@@ -17,6 +17,10 @@ done
   date
   echo "SDK=$(getprop ro.build.version.sdk) MODEL=$(getprop ro.product.model)"
   echo "BOOT_COMPLETED=$(getprop sys.boot_completed)"
+  if [ "$(getprop sys.boot_completed)" = "1" ]; then
+    rm -f /data/adb/rounded-corners-20dp-test-boots
+    echo "BOOT_GUARD: successful boot checkpoint reached; counter reset"
+  fi
   echo "APK_PATH=$APK"
   if [ -f "$APK" ]; then
     echo "APK_PRESENT=yes"
