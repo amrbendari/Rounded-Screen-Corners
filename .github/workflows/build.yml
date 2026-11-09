@@ -58,7 +58,7 @@ jobs:
           cp module/module.prop out/rounded_screen_corners_20dp/module.prop
           cp module/service.sh out/rounded_screen_corners_20dp/service.sh
           cp module/uninstall.sh out/rounded_screen_corners_20dp/uninstall.sh
-          cp overlay/build/outputs/apk/release/overlay-release-unsigned.apk out/rounded_screen_corners_20dp/system/product/overlay/RoundedScreenCorners20dp.apk
+          cp overlay/build/outputs/apk/release/overlay-release.apk out/rounded_screen_corners_20dp/system/product/overlay/RoundedScreenCorners20dp.apk
           chmod 0755 out/rounded_screen_corners_20dp/service.sh out/rounded_screen_corners_20dp/uninstall.sh
           (cd out/rounded_screen_corners_20dp && zip -qr ../Rounded-Screen-Corners-20dp-Magisk.zip .)
 
@@ -66,10 +66,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -s overlay/build/outputs/apk/release/overlay-release-unsigned.apk
+          APK=overlay/build/outputs/apk/release/overlay-release.apk
+          test -s "$APK"
           test -s out/Rounded-Screen-Corners-20dp-Magisk.zip
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump resources "$APK" | grep -E 'rounded_corner_radius(_top|_bottom)?'
           unzip -l out/Rounded-Screen-Corners-20dp-Magisk.zip
-          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump resources overlay/build/outputs/apk/release/overlay-release-unsigned.apk | grep -E 'rounded_corner_radius(_top|_bottom)?'
 
       - name: Upload Magisk ZIP
         uses: actions/upload-artifact@v4
