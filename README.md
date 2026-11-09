@@ -2,17 +2,21 @@
 
 A Magisk module project for applying 20dp rounded screen-corner resources on Android devices.
 
-## Status
+## Current status
 
-**Experimental preflight build — not yet approved for installation.**
+**Experimental immutable-RRO candidate — not approved for installation.**
 
-The overlay APK maps the three target resources on the user's actual `framework-res.apk` when tested with `idmap2 create` using the product policy:
+The previous 0.3.0 build used a mutable overlay. Android's RRO documentation states that only immutable overlays targeting the `android` package affect values retrieved through `Resources.getSystem()`. This candidate therefore tests a static/immutable overlay manifest.
+
+The candidate still requires device-specific verification. On Android 11 and newer, a partition `OverlayConfig` can supersede manifest mutability settings. The target device's active overlay configuration has not yet been inspected, so this branch is not a verified solution and must not be installed as a final build.
+
+The overlay maps:
 
 - `android:dimen/rounded_corner_radius`
 - `android:dimen/rounded_corner_radius_top`
 - `android:dimen/rounded_corner_radius_bottom`
 
-This proves that idmap creation and resource mapping succeed. It does **not** yet prove that OverlayManager automatically discovers/enables the Magisk-mounted APK during boot, or that SystemUI/window decor visibly applies the radius.
+A successful APK/ZIP build proves packaging only. It does not prove that OverlayManager discovers the Magisk-mounted APK, that the overlay becomes immutable and enabled, or that the visible screen corners change to 20dp.
 
 ## Target device
 
@@ -20,24 +24,6 @@ This proves that idmap creation and resource mapping succeed. It does **not** ye
 - crDroid 13.1 / Android 17 (API 37)
 - Magisk 31.1
 
-## Diagnostics
-
-After a test installation (only when explicitly approved), `service.sh` records:
-
-- Whether the APK is visible at `/product/overlay/RoundedScreenCorners20dp.apk`
-- Whether Package Manager sees the overlay package
-- OverlayManager's state for target package `android`
-- Effective values of the three rounded-corner dimensions
-
-The log is written to `/data/adb/rounded-corners-20dp.log`.
-
-## Build
-
-GitHub Actions builds the overlay APK and packages it inside a Magisk module ZIP. A successful CI build verifies packaging, APK signature, and resource names; it does not prove runtime activation or visual effect.
-
 ## Safety
 
-- Does not patch or replace files in `/system` or `/product`.
-- Installs the overlay through the Magisk module mount.
-- This preflight build is not a release candidate. Do not install until device-specific boot discovery and activation behavior have been reviewed.
-
+This is a development candidate, not a release. Do not install until the device's OverlayConfig behavior and rollback path have been checked. Keep the existing known-good recovery/disable method available.
