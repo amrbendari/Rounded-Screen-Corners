@@ -1,6 +1,6 @@
-id=rounded_screen_corners_20dp
-name=Rounded Screen Corners 20dp
-version=0.4.0-static-candidate
-versionCode=400
+id=rounded_screen_corners_20dp_test
+name=Rounded Screen Corners 20dp TEST
+version=0.5.0-device-test
+versionCode=500
 author=amrbendari
-description=Experimental immutable RRO candidate for system rounded-corner resources; not approved for device installation.
+description=Isolated static RRO device test for 20dp system corner resources; experimental and not a verified release.
