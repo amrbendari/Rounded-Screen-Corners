@@ -1,6 +1,6 @@
 id=rounded_screen_corners_20dp
 name=Rounded Screen Corners 20dp
-version=0.3.0-discovery
-versionCode=300
+version=0.4.0-static-candidate
+versionCode=400
 author=amrbendari
-description=Safe Magisk RRO discovery test. Overlay is mutable and remains disabled; no automatic activation.
+description=Experimental immutable RRO candidate for system rounded-corner resources; not approved for device installation.
