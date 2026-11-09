@@ -2,7 +2,7 @@ name: Build Magisk Module
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, fix/static-rro-candidate ]
   workflow_dispatch:
 
 permissions:
