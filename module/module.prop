@@ -1,6 +1,6 @@
 id=rounded_screen_corners_20dp
 name=Rounded Screen Corners 20dp
-version=0.2.0-preflight
-versionCode=200
+version=0.3.0-discovery
+versionCode=300
 author=amrbendari
-description=Experimental Magisk RRO module with post-boot overlay and effective-resource diagnostics. Not yet approved for installation.
+description=Safe Magisk RRO discovery test. Overlay is mutable and remains disabled; no automatic activation.
